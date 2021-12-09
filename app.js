@@ -24,6 +24,14 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+/*
+    (A) app.set(name, data) stores a named property on the app object that can be retrieved later with app.get(name)
+    (B) app.use() registers a middleware callback that will be part of the request handler chain for incoming http requests. 
+      Depending upon the arguments, the middleware will either be called for all incoming requests or only for certain requests.
+
+*/
+
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
