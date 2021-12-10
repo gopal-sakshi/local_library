@@ -4,10 +4,13 @@ var Book = require('../models/book');
 
 const { body,validationResult } = require('express-validator');
 
+/*
+    authorController.js =====> handles the router handler callback function
+    when path is matched with route, handler function will be called... 
+*/
 
-// Display list of all Authors.
-exports.author_list = function(req, res) {
-    // res.send('NOT IMPLEMENTED: Author list');    OLD SKELETOL IMPLEMENTATION
+
+exports.author_list = function(req, res) {    
     Author.find()
     .sort([['family_name', 'ascending']])
     .exec(function (err, list_authors) {
@@ -17,15 +20,6 @@ exports.author_list = function(req, res) {
     });
 };
 
-// Display detail page for a specific Author.
-
-/*
-    exports.author_detail = function(req, res) {
-        res.send('NOT IMPLEMENTED: Author detail: ' + req.params.id);
-    };
-    OLD SKELETOL IMPLEMENTATION
-*/
-// Display detail page for a specific Author.
 exports.author_detail = function(req, res, next) {
 
     async.parallel({
@@ -51,14 +45,11 @@ exports.author_detail = function(req, res, next) {
 };
 
 
-
-// Display Author create form on GET.
 exports.author_create_get = function(req, res, next) {
     res.render('author_form', { title: 'Create Author'});
 };
 
-// Handle Author create on POST.
-// Handle Author create on POST.
+
 exports.author_create_post = [
 
     // Validate and sanitize fields.
@@ -98,22 +89,22 @@ exports.author_create_post = [
     }
 ];
 
-// Display Author delete form on GET.
+
 exports.author_delete_get = function(req, res) {
     res.send('NOT IMPLEMENTED: Author delete GET');
 };
 
-// Handle Author delete on POST.
+
 exports.author_delete_post = function(req, res) {
     res.send('NOT IMPLEMENTED: Author delete POST');
 };
 
-// Display Author update form on GET.
+
 exports.author_update_get = function(req, res) {
     res.send('NOT IMPLEMENTED: Author update GET');
 };
 
-// Handle Author update on POST.
+
 exports.author_update_post = function(req, res) {
     res.send('NOT IMPLEMENTED: Author update POST');
 };

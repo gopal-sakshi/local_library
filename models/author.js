@@ -52,4 +52,9 @@ AuthorSchema
 
 //Export model
 module.exports = mongoose.model('Author', AuthorSchema);
+/*
+  model() constructor takes two arguments
+  1st argument = name of the collection that will be created for your model
+  2nd argument = the schema that we want to use in creating the model...
+*/
 
