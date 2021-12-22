@@ -14,7 +14,7 @@ app.use('/wiki', wiki);
 
 //Set up mongoose connection
 var mongoose = require('mongoose');
-var mongoDB = 'mongodb+srv://gopal612:Benzema1@cluster0.pi54y.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+var mongoDB = require("./config/mongoDb-config");
 mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
