@@ -22,7 +22,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+app.set('view engine', 'pug');    
 
 /*
     (A) app.set(name, data) stores a named property on the app object that can be retrieved later with app.get(name)

@@ -16,7 +16,7 @@ var AuthorSchema = new Schema(
 AuthorSchema
 .virtual('name')
 .get(function () {
-  return this.family_name + '.' + this.first_name;
+  return this.family_name + '__jingchak__' + this.first_name;
 });
 
 // Virtual for author's lifespan
