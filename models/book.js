@@ -8,15 +8,13 @@ var Schema = mongoose.Schema;
   THIS IS ES6 FORMAT
   
 */
-var BookSchema = new Schema(
-  {
-    title: {type: String, required: true},
-    author: {type: Schema.Types.ObjectId, ref: 'Author', required: true},
-    summary: {type: String, required: true},
-    isbn: {type: String, required: true},
-    genre: [{type: Schema.Types.ObjectId, ref: 'Genre'}]
-  }
-);
+var BookSchema = new Schema({
+  title: {type: String, required: true},
+  author: {type: Schema.Types.ObjectId, ref: 'Author', required: true},
+  summary: {type: String, required: true},
+  isbn: {type: String, required: true},
+  genre: [{type: Schema.Types.ObjectId, ref: 'Genre'}]
+});
 
 // Virtual for book's URL
 BookSchema
@@ -69,8 +67,9 @@ module.exports = mongoose.model('Book', BookSchema);
       synchronous & asynchronous validators.
 
     All Schema types = have built-in 'required' validator
-    Number Schema type = min & max validators
-    String Schema type = enum, maxLength, minLenght validators
+    Number Schema type = min, max
+    String Schema type = enum, maxLength, minLength
+    general = required, 
 
 
     Example

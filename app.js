@@ -14,8 +14,8 @@ app.use('/wiki', wiki);
 
 //Set up mongoose connection
 var mongoose = require('mongoose');
-var mongoDB = require("./config/mongoDb-config");
-mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
+var mongoString = require("./config/mongoDb-config");
+mongoose.connect(mongoString, { useNewUrlParser: true , useUnifiedTopology: true});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
