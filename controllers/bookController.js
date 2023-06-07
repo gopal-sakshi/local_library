@@ -9,77 +9,47 @@ const { body,validationResult } = require('express-validator');
 
 
 exports.index = function(req, res) {
-
     async.parallel({
-        book_count: function(callback) {
-            Book.countDocuments({}, callback); // Pass an empty object as match condition to find all documents of this collection
-        },
-        book_instance_count: function(callback) {
-            BookInstance.countDocuments({}, callback);
-        },
-        book_instance_available_count: function(callback) {
-            BookInstance.countDocuments({status:'Available'}, callback);
-        },
-        author_count: function(callback) {
-            Author.countDocuments({}, callback);
-        },
-        genre_count: function(callback) {
-            Genre.countDocuments({}, callback);
-        }
+        book_count: function(callback) { Book.countDocuments({}, callback); },
+        book_instance_count: function(callback) { BookInstance.countDocuments({}, callback); },
+        book_instance_available_count: function(callback) { BookInstance.countDocuments({status:'Available'}, callback); },
+        author_count: function(callback) { Author.countDocuments({}, callback); },
+        genre_count: function(callback) { Genre.countDocuments({}, callback); }
     }, function(err, results) {
         res.render('index', { title: 'Local Library Home', error: err, data: results });
     });
 };
 
-
 // Display list of all Books.
-    /*
-            exports.book_list = function(req, res) {
-              res.send('NOT IMPLEMENTED: Book list');  
-            };
-        ORIGINAL skeleton structure of book_list() method... below is its updated implementation
-    */
-
 exports.book_list = function(req, res, next) {
-
     Book.find({}, 'title author')
-      .populate('author')
-      .exec(function (err, list_books) {
-        if (err) { return next(err); }
-        //Successful, so render
+    .populate('author')
+    .exec(function (err, list_books) {
+        if (err) { return next(err); }        
         res.render('book_list', { title: 'Book List', book_list: list_books });
-      });
-  
-  };
+    });
+};
 
 // Display detail page for a specific book.
 exports.book_detail = function(req, res) {
-    //res.send('NOT IMPLEMENTED: Book detail: ' + req.params.id);
-
     async.parallel({
         book: function(callback) {
-
             Book.findById(req.params.id)
-              .populate('author')
-              .populate('genre')
-              .exec(callback);
+            .populate('author')
+            .populate('genre')
+            .exec(callback);
         },
         book_instance: function(callback) {
-
-          BookInstance.find({ 'book': req.params.id })
-          .exec(callback);
+            BookInstance.find({ 'book': req.params.id })
+            .exec(callback);
         },
     }, function(err, results) {
         if (err) { return next(err); }
-        if (results.book==null) { // No results.
-            var err = new Error('Book not found');
-            err.status = 404;
-            return next(err);
-        }
-        // Successful, so render.
+        if (results.book==null) {
+            var err = new Error('Book not found'); err.status = 404; return next(err);
+        }        
         res.render('book_detail', { title: results.book.title, book: results.book, book_instances: results.book_instance } );
     });
-
 };
 
 
