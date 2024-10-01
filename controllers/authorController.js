@@ -4,7 +4,6 @@ var Book = require('../models/book');
 
 const { body, validationResult } = require('express-validator');
 
-
 var authorList = (req, res) => {
     Author.find()
         .sort([['family_name', 'ascending']])

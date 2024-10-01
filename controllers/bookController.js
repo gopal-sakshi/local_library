@@ -10,7 +10,7 @@ const { body,validationResult } = require('express-validator');
 
 exports.index = function(req, res) {
     async.parallel({
-        book_count: function(callback) { Book.countDocuments({}, callback); },
+        book_count: (callback) => { Book.countDocuments({}, callback); },
         book_instance_count: function(callback) { BookInstance.countDocuments({}, callback); },
         book_instance_available_count: function(callback) { BookInstance.countDocuments({status:'Available'}, callback); },
         author_count: function(callback) { Author.countDocuments({}, callback); },
@@ -76,10 +76,8 @@ exports.book_create_post = [
     // Convert the genre to an array.
     (req, res, next) => {
         if(!(req.body.genre instanceof Array)){
-            if(typeof req.body.genre ==='undefined')
-            req.body.genre = [];
-            else
-            req.body.genre = new Array(req.body.genre);
+            if(typeof req.body.genre ==='undefined') req.body.genre = [];
+            else req.body.genre = new Array(req.body.genre);
         }
         next();
     },
@@ -98,17 +96,16 @@ exports.book_create_post = [
         const errors = validationResult(req);
 
         // Create a Book object with escaped and trimmed data.
-        var book = new Book(
-          { title: req.body.title,
+        var book = new Book({ 
+            title: req.body.title,
             author: req.body.author,
             summary: req.body.summary,
             isbn: req.body.isbn,
             genre: req.body.genre
-           });
+        });
 
         if (!errors.isEmpty()) {
             // There are errors. Render form again with sanitized values/error messages.
-
             // Get all authors and genres for form.
             async.parallel({
                 authors: function(callback) {
@@ -130,13 +127,11 @@ exports.book_create_post = [
             });
             return;
         }
-        else {
-            // Data from form is valid. Save book.
+        else {              // Data from form is valid. Save book.
             book.save(function (err) {
-                if (err) { return next(err); }
-                   //successful - redirect to new book record.
-                   res.redirect(book.url);
-                });
+                if (err) { return next(err); }                   
+                else res.redirect(book.url);            //successful - redirect to new book record.
+            });
         }
     }
 ];
