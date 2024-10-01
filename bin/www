@@ -1,19 +1,6 @@
-#!/usr/bin/env node
-
-
-/*  
-  it is the "module.exports" object in app.js = that is supplied to the caller when this file is imported.
-  if module.exports = "subbarao" in app.js, then this file bin/www will get subbarao
-
-*/
-
-
 var app = require('../app');
 var debug = require('debug')('express-locallibrary-tutorial:server');
 var http = require('http');
-
-
-
 var port = normalizePort(process.env.PORT || '3012');
 app.set('port', port);
 var server = http.createServer(app);
@@ -22,35 +9,32 @@ server.on('error', onError);
 server.on('listening', onListening12);    // onListening12() function will be called
 
 function normalizePort(val) {
-  var port = parseInt(val, 10);
-  if (isNaN(port)) { return val; }
-  if (port >= 0) { return port; }
-  return false;
+    var port = parseInt(val, 10);
+    if (isNaN(port)) { return val; }
+    if (port >= 0) { return port; }
+    return false;
 }
 
 function onError(error) {
-  if (error.syscall !== 'listen') { throw error; }
-  var bind = (typeof port === 'string') ? ('Pipe ' + port) : ('Port ' + port);
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
+    if (error.syscall !== 'listen') { throw error; }
+    var bind = (typeof port === 'string') ? ('Pipe ' + port) : ('Port ' + port);
+    switch (error.code) {
+        case 'EACCES':
+            console.error(bind + ' requires elevated privileges');
+            process.exit(1);
+            break;
+        case 'EADDRINUSE':
+            console.error(bind + ' is already in use');
+            process.exit(1);
+            break;
+        default:
+            throw error;
+    }
 }
 
 function onListening12() {
-  console.log("why server.on must use onListening12 & not onListening12()");
-  var addr = server.address();
-  var bind = (typeof addr === 'string')
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  console.log('listening on '+bind);
-  debug('Listening on ' + bind);
+    var addr = server.address();
+    var bind = (typeof addr === 'string') ? 'pipe ' + addr : 'port ' + addr.port;
+    console.log('listening on ' + bind);
+    debug('Listening on ' + bind);
 }
